@@ -2,8 +2,6 @@
 %%directoy, and includes an error check if provided name of current recording
 %%folder such as "2022-07-13-Training_day02"
 function cd_to_cheetah_folder(day_folder)
-    
-%     if ~exist(day_folder 
 
     %based on Cheetah Neuralynx file naming conventions, the folder of recording 
     %data for a given session starts with the year first, thus "20..." 
