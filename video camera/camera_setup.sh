@@ -4,14 +4,14 @@
 #
 #Seth Campbell - July 17, 2021
 
-#delcare some constants
+#delcare constants
 cam1_x=140
 cam2_x=$cam1_x #same position in Spinview GUI horizontally
 cam1_y=305
 cam2_y=325 #2nd camera should be below the first
 
 #spinview  #acts differently then simply clicking it, so doesn't work
-xdotool mousemove 40 610 click 1
+xdotool mousemove 40 610 click 1 #click spinview icon in vertical taskbar
 sleep 4
 
 #note: monitor this was written on was 1920 pixels/units wide, 1200 pixels/units tall
@@ -22,10 +22,10 @@ sleep 0.5 #slight delay needed for next command to work
 xdotool windowsize $(xdotool getactivewindow) 100% 100% #got from https://askubuntu.com/questions/384736/how-do-i-maximize-an-already-open-gnome-terminal-window-from-command-line
 
 
-xdotool mousemove $cam1_x $cam1_y #305 
+xdotool mousemove $cam1_x $cam1_y  
 xdotool click 1 #click main camera in devices
 sleep 5
-xdotool mousemove $cam2_x $cam2_y #325 
+xdotool mousemove $cam2_x $cam2_y 
 xdotool click 1 #click secondary camera in devices
 
 #start aquisition
@@ -80,6 +80,7 @@ xdotool mousemove 1250 430 click 1
 
 xdotool mousemove $cam2_x $cam2_y click 1 #select second camera
 xdotool mousemove 250 665 click 1 mousemove 250 685 click 1 #set trigger back on before hitting record
+
 #prime recording
 xdotool mousemove 1400 820 
 xdotool click 1

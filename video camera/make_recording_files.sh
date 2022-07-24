@@ -6,13 +6,13 @@
 #baseline recording was June 21, 2022, then 3 days later is the 1st day of training, which would
 #have a folder named "2022-06-24-Training_day01".
 #
-#an example of a final file path created: "your selected directory"/thesis recordings/rat1_8401/2022-06-21-Baseline_day01/post-task_sleep
+#An example of a final file path created: "your selected directory"/thesis recordings/rat1_8401/2022-06-21-Baseline_day01/post-task_sleep
 #
 #Seth Campbell - created: November 19, 2021
 
 #read info from file to get first date of recording for a cohort, and rat ids
 file="/home/main/seth/recording info.txt" #path to file with start date and rat info
-#new_location=/home/main/seth/nas/Seth #where to create net set of folders
+#new_location=/home/main/seth/nas/Seth #where to create new set of folders, nas1 version
 new_location=/home/main/seth/nas2/Seth_temp #nas2 version
 
 
@@ -32,11 +32,6 @@ for i in ${!info_array[@]}; do
 	then
 		cohort_start=${info_array[$i]} #starting date for the cohort, used in calculations
 		
-		#new_location=/run/user/1000/gvfs/afp-volume:host=tatsunolabnas.local,user=uleth%5Cseth.campbell,volume=storage2/Seth #directory to move to, but for when PC was in dry lab
-		#new_location=/run/user/1000/gvfs/smb-share:server=tatsunolabnas,share=storage2/Seth #NAS directory to move to
-		#new_location=/home/main/seth/nas/Seth #nas1 version
-		#new_location=/home/main/seth/nas2/Seth_temp #nas2 version
-		#cohort_start=20210722 #day 1 of a cohort, YYYY-MM-DD format
 		y=$(date +%Y) #current year
 		m=$(date +%m) #current month
 		d=$(date +%d) #current day
@@ -71,7 +66,6 @@ for i in ${!info_array[@]}; do
 			mkdir -p $new_location/Thesis\ recordings/rat${rat_id}/$folder_date-Baseline_day$day_num/post-task_sleep/ 
 		done
 		
-		
 		#loop for training days
 		for i in {1..14}
 		do	
@@ -93,7 +87,6 @@ for i in ${!info_array[@]}; do
 			mkdir -p $new_location/Thesis\ recordings/rat${rat_id}/$folder_date-Training_day$day_num/task/
 			mkdir -p $new_location/Thesis\ recordings/rat${rat_id}/$folder_date-Training_day$day_num/post-task_sleep/ 
 		done
-		
 		
 		#for probe day	
 		let day_num=1

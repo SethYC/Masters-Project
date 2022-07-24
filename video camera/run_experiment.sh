@@ -3,14 +3,12 @@
 #
 #Seth Campbell - July 24, 2021
 
-#read info from file to get first date of recording for a cohort, and rat ids
-file="/home/main/seth/recording info.txt" #path to file
-#new_location=/home/main/seth/nas/Seth #where to save video files
+file="/home/main/seth/recording info.txt" #file to get first date of recording for a cohort and rat ids
+#new_location=/home/main/seth/nas/Seth #where to save video files, nas1 version
 new_location=/home/main/seth/nas2/Seth_temp #nas2 version
 
 while IFS= read line
 do
-	#echo "$line"
 	info_array+=($line)
 done <"$file"
 echo file contents: ${info_array[@]}
@@ -25,10 +23,6 @@ for i in ${!info_array[@]}; do
 	then
 		cohort_start=${info_array[$i]}
 		
-		#new_location=/run/user/1000/gvfs/afp-volume:host=tatsunolabnas.local,user=uleth%5Cseth.campbell,volume=storage2/Seth #directory to move to, but for when PC was in dry lab
-		#new_location=/run/user/1000/gvfs/smb-share:server=tatsunolabnas,share=storage2/Seth #NAS directory to move to
-		#new_location=/home/main/seth/nas/Seth
-		#cohort_start=20210722 #day 1 of a cohort, YYYY-MM-DD format
 		y=$(date +%Y)
 		m=$(date +%m)
 		d=$(date +%d)
