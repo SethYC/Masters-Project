@@ -18,7 +18,7 @@ get_day = @(x) str2num(x{end-2}(end-1:end));
 get_epoch = @(x) x{end-1};
 % get_channel
 
-%find all Chettah folders and their path
+%find all Cheetah folders and their path
 directories = dir([root_dir '\rat*\20*\*\20*']); %get struct array with info on cheetah folders only
 directories = struct2table(directories); %convert to table for next step
 folder_paths = strcat(directories.folder,'\',directories.name); %get full path together

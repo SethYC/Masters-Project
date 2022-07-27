@@ -1,17 +1,17 @@
 /* 
- Uses the Adafruit MotorShield version 2 to control an Adafruit stepper motor to open a rat reach door when a button is pressed.  
- But the door must be reset manually by uncoiling the wire and placing door back (this is to prevent the door accidently closing 
+ Uses the Adafruit MotorShield (version 2) to control an Adafruit stepper motor to open a rat reaching door when a button is pressed.  
+ But the door must be reset manually by sliding the door back (this is to prevent the door accidently closing 
  on the rat's arm). 
  
  When the switch is pressed, a signal is sent to another arduino to START playing the tone first, then an event signal is set to 
  Cheetah that the door is starting to open, while also begining to open the door. The tone will play throught the entirety of the 
  door being opened. The previous version of this script had both the sound and door opening controlled by one arduino, but due to
- some electrical issue, doing both together caused the tone to sound noisy instead of a pure 6000Hz tone. 
+ some electrical issue, doing both together caused the tone to sound distorted instead of a pure 6000Hz tone. 
 
  Note: 
  -after 20 door openings, a signal to light an LED ("third_LED_Pin") is made, to signal the trial for the rat is over to the 
  experimenter. This LED stays lit until you reset the arduino for the next trial.
- -like the previous version, handling of the infrared beam for detecting reaching events is still handled by another scipt and
+ -like the previous version, handling of the infrared beam for detecting reaching events is still handled by another script and
  Aruduino. 
 
  -reseting is done with the switch instead of the onboard reset button, which was cuasing a tone to go off due to
@@ -42,7 +42,7 @@ int trial = 0;
 Adafruit_MotorShield AFMS = Adafruit_MotorShield();
 
 //note: our specific stepper motor has 200 steps per revolution, outputting to port 2 (M3 & M4)
-Adafruit_StepperMotor *myMotor = AFMS.getStepper(200, 2); //NOTE: myMotor seems to be a pointer and is not a static object or whatever that uses dot notation, use -> instead... (see https://forum.arduino.cc/index.php?topic=460384.0)
+Adafruit_StepperMotor *myMotor = AFMS.getStepper(200, 2); //NOTE: myMotor seems to be a pointer and is not a static object that uses dot notation, use -> instead... (see https://forum.arduino.cc/index.php?topic=460384.0)
 
 void setup() {
   // initialize digital pin LED_BUILTIN as an output.
@@ -52,8 +52,7 @@ void setup() {
   pinMode(inPin, INPUT_PULLUP);
   pinMode(cheetahPin, OUTPUT);
   pinMode(third_LED_Pin, OUTPUT);
-  //delay(2000);
-  pinMode(tonePin, OUTPUT); //this is new
+  pinMode(tonePin, OUTPUT); 
   pinMode(resetpin_out, OUTPUT);
   pinMode(resetpin_in, INPUT_PULLUP);
 
@@ -66,7 +65,8 @@ void setup() {
 
 void loop() {
   if (digitalRead(inPin) == LOW && is_door_open == 0) { //if switch is on and door not already opened
-    //*tone: let tone play for .5 sec before door starts opening, during this time the door open signal is also sent as this takes time, so the real door open time will be .5 sec ahead of the cheetah timestamps for this event
+    //*tone: let tone play for .5 sec before door starts opening, during this time the door open signal is 
+	//also sent as this takes time, so the real door open time will be .5 sec ahead of the cheetah timestamps for this event
     digitalWrite(tonePin, HIGH);
     digitalWrite(cheetahPin, HIGH); //door open event is sent, which is also hardwired to the 1st LED
     delay(500);
@@ -75,7 +75,7 @@ void loop() {
     
     //digitalWrite(LED_BUILTIN, LOW);   // COMMENT THIS OUT! built in LED is connected to pin 13, so this was messing with loop checks!!
     myMotor->step(200, FORWARD, DOUBLE); //spin 1 revolution
-    myMotor->release(); //maybe try commenting out later for heat issue                     
+    myMotor->release();                     
     is_door_open = 1; //indicate door is open to prevent trying to open it again before reseting, damaging the setup
 
     //unwind motor so door is ready to close right away after rat attempts a reach
