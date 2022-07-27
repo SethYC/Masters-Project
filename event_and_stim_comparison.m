@@ -1,4 +1,4 @@
-% find average delay between cheetah stim event timestamp and actual
+% Find average delay between cheetah stim event timestamp and actual
 % depolarization event (measurets_spind from lowest voltage point during a
 % stimulation event). 
 %
@@ -25,8 +25,7 @@ stim_ts = stim_ts/100; %convert from Cheetah to NSMA units
 %limit timestamps to epochs.sleep2 (i.e. post task sleep) for testing
 stim_ts(stim_ts<epochs.sleep2(1)) = [];
 
-%init array for storing differences between stim events and pulses for all
-%stim events
+%init array for storing differences between stim events and pulses for all stim events
 diffs = zeros(1,numel(stim_ts));
 
 %for each pulse timestamp, find the lowest subsquent voltage value within 20ms
@@ -35,7 +34,7 @@ for i = 1:numel(stim_ts)
     ts_start = find(ts >= stim_ts(i),1,'first'); %find the first timestamp in the eeg 
     ts_end = ts_start + 40; %note: we are using this to index by position, so 40 positions units = 20ms based on 2000hz sampling freq.
 
-    %find position of minimum voltage point within the 200ms window
+    %find position of minimum voltage point within the 20ms window
     [valley_min,valley_pos] = min(eeg(ts_start:ts_end));
     valley_pos = valley_pos + ts_start; %convert to true position and not just the relative position within ts_start:ts_end
 
