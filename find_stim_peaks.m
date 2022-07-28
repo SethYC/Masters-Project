@@ -30,7 +30,7 @@ stim_ts = stim_ts/100; %convert from Cheetah to NSMA units
 
 %init loop var
 peak_pos = zeros(numel(stim_ts),1); 
-
+relative_pos = zeros(numel(stim_ts),1);
 %for every pulse event, find its corresponding max voltage point in the stim channel 
 for i = 1:numel(stim_ts)
     %get start and end timestamps of the searching area (window_ms) for the current stim pulse
@@ -39,11 +39,16 @@ for i = 1:numel(stim_ts)
     ts_end = start_pos + window_units; %note: we are using this to index by position, not time
     
     %find position of max voltage within the window
-    [valley_max,relative_pos] = max(eeg(start_pos:ts_end));
-
-    peak_pos(i) = relative_pos + start_pos; %convert to true position and not just the relative position to start_pos
+    [peak_height,relative_pos(i)] = max(eeg(start_pos:ts_end));
+    
+    if peak_height > 4 %any real peak will be above 4 units in height
+        peak_pos(i) = relative_pos(i) + start_pos; %convert to true position and not just the relative position to start_pos
+    else
+        warning("A normal stim peak could not be found within search window. Estimating location instead.")
+        peak_pos(i) = start_pos + mean(realtive_pos); %if i can't find a normal peak, estimate where the stim event should be based on the average of past results
+    end
 end
 
-peak_ts = ts(peak_pos); %convert from position to timestamps
+peak_ts = ts(peak_pos); %convert from position to timestamps 
 
 end
