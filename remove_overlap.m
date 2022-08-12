@@ -1,5 +1,18 @@
-%from found spindle timestamps, remove any region that overlaps with a stim
-%timestamp with a given width. 
+%remove regions in spindles that overlap with stim events within a certain
+%width. This is used to help clean found spindle events by removing false
+%results around stimulation periods which do not count as spindles. 
+%
+%note: time unit is arbitrary
+%
+%input:
+%   spindle_ts - nx2 matrix where n is number of found spindles, 1st column
+%       = start time, 2nd column = end time 
+%   stim_ts - array of stimulation timestamps
+%   width - int, number of time units to look forward and backwards from a
+%       stimulation event to be removed when overlapping with a spindle
+%
+%output:
+%   ts - remaining timestamps of spindles, same format at spindle_ts
 
 function ts = remove_overlap(spindle_ts,stim_ts,width)
 
