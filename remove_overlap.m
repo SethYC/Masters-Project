@@ -13,6 +13,10 @@
 %
 %output:
 %   ts - remaining timestamps of spindles, same format at spindle_ts
+%
+%to add: make more robust by allowing the situation when the stim event
+%doesn't lie between the spindle, but its added width would to be removed
+%as overlap
 
 function ts = remove_overlap(spindle_ts,stim_ts,width)
 
