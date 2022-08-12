@@ -21,8 +21,11 @@
 function ts = remove_overlap(spindle_ts,stim_ts,width)
 
 %init loop vars
-search_pos = 1; %what row from s[indle_ts
+search_pos = 1; %what row from spindle_ts
 i = 1; %what stim value from stim_ts
+
+%for testing: record occurence of removal types
+n_overlap_both = 0; n_overlap_neither = 0; n_overlap_left = 0; n_overlap_right = 0;
 
 while 1
     if i > length(stim_ts) || search_pos > size(spindle_ts,1) %reached the end 
@@ -47,16 +50,19 @@ while 1
         if right_pos >= spindle_ts(search_pos,2)
             %case 1 - removal region overlaps both sides
             spindle_ts(search_pos,:) = []; %delete row
+            n_overlap_both = n_overlap_both + 1;
         else
             %case 2 - removal region overlaps on the left side only
             spindle_ts(search_pos,1) = right_pos;
             search_pos = search_pos + 1;
+            n_overlap_left = n_overlap_left + 1;
         end
     else
         if right_pos >= spindle_ts(search_pos,2)
             %case 3 - removal region overlaps on the right side only
             spindle_ts(search_pos,2) = left_pos;
             search_pos = search_pos + 1;
+            n_overlap_right = n_overlap_right + 1;
         else 
             %case 4 - removal region is within a spindle event from both sides
 
@@ -65,10 +71,17 @@ while 1
             spindle_ts = [spindle_ts(1:search_pos,:); [right_pos,spindle_ts(search_pos,2)] ; spindle_ts(search_pos+1:end,:)]; %based on https://www.mathworks.com/matlabcentral/answers/172699-how-can-i-insert-row-into-matrix-without-deleting-its-values
             spindle_ts(search_pos,2) = left_pos;
             search_pos = search_pos + 1;
+            n_overlap_neither = n_overlap_neither + 1;
         end
     end
 
 end %while end
+
+%for testing: occurence stats
+fprintf("# overlap both: \t%i\n",n_overlap_both)
+fprintf("# overlap left: \t%i\n",n_overlap_left)
+fprintf("# overlap right: \t%i\n",n_overlap_right)
+fprintf("# overlap neither \t%i\n",n_overlap_neither)
 
 ts = spindle_ts;
 end %function end
