@@ -27,7 +27,7 @@ rectangle('Position',[14.5 0 1 100], 'EdgeColor','none','FaceColor',[0.8196    0
 text(15.5,-3.75,'probe','HorizontalAlignment','center','FontSize', 11)
 ylim([0 100])
 xlim([1 15.5])
-ylabel("# successes")
+ylabel("% successes")
 xlabel('day')
 grid on 
 
