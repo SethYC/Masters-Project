@@ -160,13 +160,6 @@ ylabel(charts,'duration (hh:mm:ss)')
 %%
 %%functions
 
-%Removes the last two folders in a given file path
-function out = remove_last_2_folders(in) 
-    intermediate = split(in, '\'); %seperate file path into individual file names as a cell array
-    intermediate(end-1:end) = []; %delete last two files 
-    out = cell2mat(join(intermediate,'\')); %rejoin parts 
-end
-
 %trims a matrix of event start and end times so that no event occurs past a
 %certain duration from the start time.
 %
