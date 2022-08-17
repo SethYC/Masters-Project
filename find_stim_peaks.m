@@ -33,6 +33,7 @@ stim_ts = stim_ts/100; %convert from Cheetah to NSMA units
 %init loop var
 peak_pos = zeros(numel(stim_ts),1); 
 relative_pos = zeros(numel(stim_ts),1);
+
 %for every pulse event, find its corresponding max voltage point in the stim channel 
 for i = 1:numel(stim_ts)
     %get start and end timestamps of the searching area (window_ms) for the current stim pulse
@@ -47,7 +48,7 @@ for i = 1:numel(stim_ts)
         peak_pos(i) = relative_pos(i) + start_pos; %convert to true position and not just the relative position to start_pos
     else
         warning("A normal stim peak could not be found within search window. Estimating location instead.")
-        peak_pos(i) = start_pos + mean(realtive_pos); %if i can't find a normal peak, estimate where the stim event should be based on the average of past results
+        peak_pos(i) = start_pos + floor(mean(relative_pos)); %if i can't find a normal peak, estimate where the stim event should be based on the average of past results (and floor it so its an integer)
     end
 end
 
