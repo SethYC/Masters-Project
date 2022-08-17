@@ -7,7 +7,7 @@
 load('Y:\Seth_temp\Thesis recordings\directory_table.mat') %created by create_recording_directores()
 
 %remove any file (row) from baseline phase
-t.phase = categorical(t.phase); %convert to categorical for next step
+% t.phase = categorical(t.phase); %convert to categorical for next step
 ix = t.phase == 'Baseline'; %index of rows with baseline
 t(ix,:) = []; %delete the rows
 

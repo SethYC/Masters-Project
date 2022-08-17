@@ -36,15 +36,15 @@ epochs = cellfun(get_epoch,split_paths,'UniformOutput',false);
 
 %init table
 t = table('Size',[length(folder_paths),6],...
-          'VariableTypes',["double","string","cell","double","string","cell"],...
+          'VariableTypes',["double","string","categorical","double","categorical","cell"],...
           'VariableNames', ["rat_num","group","phase","day","epoch","path"]);
 
 %fill table
 t.rat_num = ratnums;
 t.group = groups;
-t.phase = phases;
+t.phase = categorical(phases);
 t.day = days;
-t.epoch = epochs;
+t.epoch = categorical(epochs);
 t.path = folder_paths;
 
 %save table
