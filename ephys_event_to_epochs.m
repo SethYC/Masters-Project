@@ -2,14 +2,14 @@
 %epochs and saves the timestamps to epochs.mat
 
 %load table var 't'
-load('Y:\Seth_temp\Thesis recordings\directory_table.mat') %created by create_recording_directores()
+load('Y:\Seth_temp\Thesis recordings\directory_table.mat') %created by create_recording_directories_table()
 
 %remove any file (row) from baseline phase or task epoch
 % t.phase = categorical(t.phase); %convert to categorical for next step
 t(t.phase == 'Baseline',:) = []; %delete rows based on index of rows with baseline
 t(t.epoch == 'task',:) = [];
 
-for i = 1:length(t.rat_num) %for each epoch file in all rats & days   
+for i = 1:length(t.rat_num) %for each epoch file in all rats & days    
     %load epochs.mat from two folders up
     epochs_path = remove_last_2_folders(t.path{i});
     load([epochs_path, '\epochs.mat']) %import struct 'epochs'
