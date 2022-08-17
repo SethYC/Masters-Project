@@ -2,6 +2,8 @@
 %it. Must be in directorty with the recording data.
 %
 %Input: epochs - epochs struct for the current day and rat 
+%       path - file path to where stim.ncs & events.nev are stored (should
+%       be the same)
 %
 %output: timestamps of stim peaks (in NSMA units)
 %
@@ -10,18 +12,18 @@
 %channel that records when stimulation is delivered, showing the same biphasic
 %pulse that is delivered to the rat's motor cortex.
 
-function peak_ts = find_stim_peaks(epochs)
+function peak_ts = find_stim_peaks(epochs, path)
 
 sample_rate = 8000; %data was collected at 8khz
 window_ms = 40; %window in ms to search for a stim peak after each pulse event
 
 %load stim channel
-eeg_tsd = csc2tsd_badclock('stim.ncs',epochs.sleep2); %sleep2 is the only epoch with stimulation
+eeg_tsd = csc2tsd_badclock([path,'\stim.ncs'],epochs.sleep2); %sleep2 is the only epoch with stimulation
 eeg = Data(eeg_tsd);
 ts = Range(eeg_tsd);
 
 %load events file
-[event_ts,s,~] = events_read('Events.nev');
+[event_ts,s,~] = events_read([path,'\Events.nev']);
 
 %find pulse event timestamps
 pos = matches(s,'pulse');
