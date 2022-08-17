@@ -48,8 +48,8 @@ epochs_t = addvars(epochs_t,R1_SWS_pre45,R1_SWS_total,R2_SWS_pre75,R2_SWS_total,
 
 %fill duration values
 for i = 1:length(epochs_t.rat_num) %for each epochs.mat file
-    epoch_path = epochs_t.file_path{i};
-    load([epoch_path, '\epochs.mat']) %import struct 'epochs'
+    epochs_path = epochs_t.file_path{i};
+    load([epochs_path, '\epochs.mat']) %import struct 'epochs'
 
     %note: for readability, i should split this into multiple lines later(?)
     epochs_t.R1_SWS_total(i) = seconds(sum(diff(epochs.tssws1'))/1e4);
