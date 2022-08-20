@@ -49,11 +49,11 @@ y = circshift(y,-1,2); %move probe trial results in column 1 to last column inst
 
 
 %split into groups
-x_con = x(5:6,:); %pre-task pre45
-x_exp = x(1:4,:);
+x_exp = x([2,4,5,6],:); %pre-task pre45
+x_con = x([1,3],:);
 
-y_con = y(5:6,:); %post-task pre75
-y_exp = y(1:4,:);
+y_exp = y([2,4,5,6],:); %post-task pre75
+y_con = y([1,3],:);
 
 %----------------------------------
 %pre-task pre45 charts
@@ -62,12 +62,12 @@ y_exp = y(1:4,:);
 %maybe ineffeicent way to plot each rat's pre45 dur, but works for now
 charts = tiledlayout('flow'); 
 ax1 = nexttile; hold on;
-plot(x(1,:),'-o','markersize', 5, 'DisplayName','rat 1E')
-plot(x(2,:),'-o','markersize', 5, 'DisplayName','rat 2E')
-plot(x(3,:),'-o','markersize', 5, 'DisplayName','rat 3E')
-plot(x(4,:),'-o','markersize', 5, 'DisplayName','rat 4E')
-plot(x(5,:),'-o','markersize', 5, 'DisplayName','rat 1C')
-plot(x(6,:),'-o','markersize', 5, 'DisplayName','rat 2C')
+plot(x(2,:),'-o','markersize', 5, 'DisplayName','rat 1E')
+plot(x(4,:),'-o','markersize', 5, 'DisplayName','rat 2E')
+plot(x(5,:),'-o','markersize', 5, 'DisplayName','rat 3E')
+plot(x(6,:),'-o','markersize', 5, 'DisplayName','rat 4E')
+plot(x(1,:),'-o','markersize', 5, 'DisplayName','rat 1C')
+plot(x(3,:),'-o','markersize', 5, 'DisplayName','rat 2C')
 legend
 title("pre-task sleep duration")
 
@@ -95,12 +95,12 @@ title("pre-task sleep group duration (SEM)")
 
 %pre75 all rats
 ax4 = nexttile; hold on;
-plot(y(1,:),'-o','markersize', 5, 'DisplayName','rat 1E')
-plot(y(2,:),'-o','markersize', 5, 'DisplayName','rat 2E')
-plot(y(3,:),'-o','markersize', 5, 'DisplayName','rat 3E')
-plot(y(4,:),'-o','markersize', 5, 'DisplayName','rat 4E')
-plot(y(5,:),'-o','markersize', 5, 'DisplayName','rat 1C')
-plot(y(6,:),'-o','markersize', 5, 'DisplayName','rat 2C')
+plot(y(2,:),'-o','markersize', 5, 'DisplayName','rat 1E')
+plot(y(4,:),'-o','markersize', 5, 'DisplayName','rat 2E')
+plot(y(5,:),'-o','markersize', 5, 'DisplayName','rat 3E')
+plot(y(6,:),'-o','markersize', 5, 'DisplayName','rat 4E')
+plot(y(1,:),'-o','markersize', 5, 'DisplayName','rat 1C')
+plot(y(3,:),'-o','markersize', 5, 'DisplayName','rat 2C')
 legend
 title("post-task sleep duration")
 
