@@ -35,6 +35,7 @@ end
 %%
 %%functions
 
+%finds spindles in the specified path and cortex channel. 
 function ts = get_spindles(path,epoch_name,epochs,ctx_ch)
     
     if epoch_name == 'pre-task_sleep'

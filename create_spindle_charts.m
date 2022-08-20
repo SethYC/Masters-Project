@@ -70,9 +70,9 @@ y = y./seconds(R2_dur);
 x(x==Inf) = 0;
 y(y==Inf) = 0;
 
-%filter out values above 1 spindl@mean_omite per second average (temporary threshold)
-x(x>1) = NaN;
-y(y>1) = NaN;
+%filter out values above 1 spindle per second average (temporary threshold)
+% x(x>1) = NaN;
+% y(y>1) = NaN;
 
 %split into groups
 x_con = x(5:6,:); %pre-task pre45
