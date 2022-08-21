@@ -52,13 +52,23 @@ function ts = get_spindles(path,epoch_name,epochs,ctx_ch)
         peak_ts = find_stim_peaks(epochs, path);
         ts = remove_overlap(ts,peak_ts,160); %note: think this is working yet because it is being undone by tsgaps in its current form/settings
     end
-  
+    
+    %remove spindles outside of motionlessness
+    if epoch_name == 'post-task_sleep'
+        ts = rm_ts_overlap(ts,epochs.tswake2);
+    else %pre-task_sleep
+        ts = rm_ts_overlap(ts,epochs.tswake1);
+    end
+
     %remove spindles or gaps between spindles that are too small
     ts = tsgaps(ts,.075,.200);
 
-    %quick removal of any spindles longer than 1 sec (should verify this
+    %quick removal of any spindles longer than 2 sec (should verify this
     %threshold later)
     diffs = ts(:,2)-ts(:,1); %difference between end and start times
-    ts(diffs>1e4,:) = []; %1e4 nsma units = 1 sec
+    ts(diffs>2e4,:) = []; %1e4 nsma units = 1 sec
+
+    
+    
 
 end
