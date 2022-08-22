@@ -49,13 +49,13 @@ for i = 1:4
     plot(f0_snippet,norm_power0_snippet)
     str = sprintf('hpc%i', i); %subplot title
     title(str)
-    patch([5,5,8,8],[0,1,1,0],'red','FaceAlpha',.1,'edgecolor','none') %theta patch
+    patch([5,5,8,8],[0,1,1,0],'red','FaceAlpha',.2,'edgecolor','none') %theta patch
     patch([100,100,300,300],[0,1,1,0],'green','FaceAlpha',.1,'edgecolor','none') %SWR 100Hz-300Hz patch
 end
 
 %general chart formatting
 linkaxes(ax,'xy')
 xlim([0 300])
-xlabel(charts,'Frequency (Hz)')
-ylabel(charts,'Normalized Power')
-title(charts,"Normalized power of all hippocampal channels for a given recording epoch","red = theta, green = SWR 100-300Hz")
+xlabel(charts,'Frequency (Hz)','FontSize',14)
+ylabel(charts,'Normalized Power','FontSize',14)
+title(charts,"Normalized power of all hippocampal channels for a given recording epoch","red = theta 5-8Hz, green = SWR 100-300Hz")

@@ -63,8 +63,8 @@ R2_dur = reshape(epochs_t.R2_SWS_pre75,15,[])';
 R2_dur = circshift(R2_dur,-1,2); 
 
 %normalize counts by SWS duration
-x = x./seconds(R1_dur);
-y = y./seconds(R2_dur);
+x = x./minutes(R1_dur);
+y = y./minutes(R2_dur);
 
 %get rid of Inf (from having no SWS in an epoch)
 x(x==Inf) = 0;
@@ -94,7 +94,7 @@ plot(x(5,:),'-o','markersize', 5, 'DisplayName','rat 3E')
 plot(x(6,:),'-o','markersize', 5, 'DisplayName','rat 4E')
 plot(x(1,:),'-o','markersize', 5, 'DisplayName','rat 1C')
 plot(x(3,:),'-o','markersize', 5, 'DisplayName','rat 2C')
-legend
+legend('Location','northwest')
 title("pre-task spindle rates")
 
 %pre45 mean and std total
@@ -152,5 +152,5 @@ title("post-task sleep group spindle rates (SEM)")
 %full chart formatting
 title(charts,"Comparison of spindle rates")
 linkaxes([ax1,ax2,ax3,ax4,ax5,ax6],'y')
-xlabel(charts,'day')
-ylabel(charts,'mean spindles per second of SWS')
+xlabel(charts,'day','FontSize',14)
+ylabel(charts,'mean spindles per minute of SWS','FontSize',14)

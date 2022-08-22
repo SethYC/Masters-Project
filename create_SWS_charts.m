@@ -43,10 +43,11 @@ my_sem = @(x) std(x)/sqrt(size(x,1));
 
 x = reshape(epochs_t.R1_SWS_pre45,15,[])'; %format durations into a 6x15 (# of rats by 15 days) matrix
 x = circshift(x,-1,2); %move probe trial results in column 1 to last column instead and shift eveything else left
+x = x/(minutes(45))*100;
 
 y = reshape(epochs_t.R2_SWS_pre75,15,[])'; %format durations into a 6x15 (# of rats by 15 days) matrix
 y = circshift(y,-1,2); %move probe trial results in column 1 to last column instead and shift eveything else left
-
+y = y/(minutes(75))*100;
 
 %split into groups
 x_exp = x([2,4,5,6],:); %pre-task pre45
@@ -101,7 +102,7 @@ plot(y(5,:),'-o','markersize', 5, 'DisplayName','rat 3E')
 plot(y(6,:),'-o','markersize', 5, 'DisplayName','rat 4E')
 plot(y(1,:),'-o','markersize', 5, 'DisplayName','rat 1C')
 plot(y(3,:),'-o','markersize', 5, 'DisplayName','rat 2C')
-legend
+legend('Location','southwest')
 title("post-task sleep duration")
 
 %pre75 mean and std total
@@ -126,5 +127,5 @@ title("post-task sleep group duration (SEM)")
 %full chart formatting
 title(charts,"Comparison of SWS duration")
 linkaxes([ax1,ax2,ax3,ax4,ax5,ax6],'y')
-xlabel(charts,'day')
-ylabel(charts,'duration (hh:mm:ss)')
+xlabel(charts,'day','FontSize',14)
+ylabel(charts,'% time in SWS out of total rest','FontSize',14)
