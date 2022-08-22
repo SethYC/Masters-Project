@@ -1,5 +1,8 @@
 %Compute power spectral density and create plots for all four hippocampal
 %recording channels for a given recording epoch. 
+%
+%note: must be in directory of recording epoch with the hippocampal .ncs 
+%files.
 
 %four hippocampal channel names
 hpc_names = ["hpc1.ncs", "hpc2.ncs", "hpc3.ncs", "hpc4.ncs"];
@@ -24,8 +27,7 @@ for i = 1:4
         eeg_tsd = csc2tsd_badclock(hpc_ch,epochs.sleep2);
     else %pre-task_sleep
         eeg_tsd = csc2tsd_badclock(hpc_ch,epochs.sleep1);
-    end
-    
+    end  
     eeg = Data(eeg_tsd);
     s_rate = 1 / mode(diff(Range(eeg_tsd)))*1e4; %sample rate in Hz %note: maybe make this more effecient later
 
