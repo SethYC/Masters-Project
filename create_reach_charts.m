@@ -47,12 +47,12 @@ title("Group comparison of reach successes over time (SEM)")
 legend('control','experimental')
 
 %% individual rat results
-plot(results(1,:),'-o','markersize', 5, 'DisplayName','rat 1E')
-plot(results(2,:),'-o','markersize', 5, 'DisplayName','rat 2E')
-plot(results(3,:),'-o','markersize', 5, 'DisplayName','rat 3E')
-plot(results(4,:),'-o','markersize', 5, 'DisplayName','rat 4E')
-plot(results(5,:),'-o','markersize', 5, 'DisplayName','rat 1C')
-plot(results(6,:),'-o','markersize', 5, 'DisplayName','rat 2C')
+plot(results(1,:),'-o','markersize', 5, 'DisplayName','rat 1E','LineWidth',2,'Color','[0.62,0.41,0.66]')
+plot(results(2,:),'--o','markersize', 5, 'DisplayName','rat 2E','LineWidth',2,'Color','[0.62,0.41,0.66]')
+plot(results(3,:),':o','markersize', 5, 'DisplayName','rat 3E','LineWidth',2,'Color','[0.62,0.41,0.66]')
+plot(results(4,:),'-.o','markersize', 5, 'DisplayName','rat 4E','LineWidth',2,'Color','[0.62,0.41,0.66]')
+plot(results(5,:),'-o','markersize', 5, 'DisplayName','rat 1C','LineWidth',2,'Color','[0.27,0.58,0.77]')
+plot(results(6,:),'-.o','markersize', 5, 'DisplayName','rat 2C','LineWidth',2,'Color','[0.27,0.58,0.77]')
 legend
 title("Reach successes over time")
 
