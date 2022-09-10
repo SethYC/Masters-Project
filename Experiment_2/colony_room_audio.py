@@ -14,8 +14,10 @@ duration_hr = 5 #hours
 
 #import libraries
 import pygame
+from datetime import datetime
 
 duration_s = duration_hr*60*60 #convert hours to seconds
+start_t = datetime.now()
 
 pygame.init()
 chirp = pygame.mixer.music
@@ -23,3 +25,14 @@ chirp.load(path2) #init music stream
 
 #play audio
 chirp.play() #start music stream playback
+
+# while True:
+#     elapsed_t = (datetime.now()-start_t).total_seconds()
+
+
+
+
+
+
+
+
