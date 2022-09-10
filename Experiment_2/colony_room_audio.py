@@ -6,11 +6,14 @@ Created on Fri Sep  9 17:58:50 2022
 
 @author: seth.campbell
 """
-#path to sound file
-path = '/home/seth/Downloads/foo2.wav'
+#init constants/parameters 
+path = '/home/seth/Downloads/foo2.wav' path to sound file
+duration = 5 #hours
 
 #import libraries
 import pygame
+
+duration = duration*60*60 #convert hours to seconds
 
 pygame.init()
 chirp = pygame.mixer.Sound(path)
