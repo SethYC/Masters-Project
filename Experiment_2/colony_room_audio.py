@@ -6,4 +6,14 @@ Created on Fri Sep  9 17:58:50 2022
 
 @author: seth.campbell
 """
+#path to sound file
+path = '/home/seth/Downloads/foo2.wav'
 
+#import libraries
+import pygame
+
+pygame.init()
+chirp = pygame.mixer.Sound(path)
+
+#play audio
+chirp.play()
