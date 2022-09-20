@@ -24,12 +24,14 @@ chirp = pygame.mixer.music
 chirp.load(path2) #init music stream 
 
 #play audio
-chirp.play() #start music stream playback
+chirp.play(loops=-1) #start infinite loop music stream 
 
-# while True:
-#     elapsed_t = (datetime.now()-start_t).total_seconds()
-
-
+while True:
+    elapsed_t = (datetime.now()-start_t).total_seconds()
+    if elapsed_t >= duration_s:
+        print("time has elapsed")
+        chirp.stop()
+        break
 
 
 
