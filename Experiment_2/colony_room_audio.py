@@ -10,13 +10,14 @@ Created on Fri Sep  9 17:58:50 2022
 #init constants/parameters 
 path = '/home/seth/Downloads/foo2.wav' #path to sound file
 path2 = '/home/seth/Downloads/The sound of the night_ cicadas and nocturnal birds.mp3'
-duration_hr = 5 #hours
+duration_hr = .05 #hours
 bin_dur = 10 #seconds
 sound_on_ratio = 0.6 
 
 #import libraries
 import pygame
 import time
+import random
 from datetime import datetime
 
 duration_s = duration_hr*60*60 #convert hours to seconds
@@ -33,6 +34,12 @@ while True:
     time.sleep(bin_dur)
     #generate rand int from 0 to 1, if larger than sound_on_ration, then
     #stop audio, else play audio
+    if random.random() > sound_on_ratio:
+        chirp.pause()
+        print("pause!")
+    else:
+        chirp.unpause()
+        print("play")
     elapsed_t = (datetime.now()-start_t).total_seconds()
     if elapsed_t >= duration_s:
         print("time has elapsed")
