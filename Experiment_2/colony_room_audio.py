@@ -12,7 +12,8 @@ Created on Fri Sep  9 17:58:50 2022
 duration_hr = .05 #hours
 bin_dur = 10 #seconds
 sound_on_ratio = 0.6 
-path = '/home/seth/Downloads/The sound of the night_ cicadas and nocturnal birds.mp3'
+path = '/home/seth/Downloads/Western Wood-Pewee (Consolidation).mp3'
+
 
 #import libraries
 import pygame
