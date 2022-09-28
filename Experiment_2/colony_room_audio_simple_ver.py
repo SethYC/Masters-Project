@@ -11,15 +11,11 @@ Created on Fri Sep 27
 
 #init constants/parameters 
 duration_hr = .05 #hours
-bin_dur = 10 #seconds
-sound_on_ratio = 0.6 
 path = '/home/seth/Downloads/Western Wood-Pewee (Consolidation).mp3'
-
 
 #import libraries
 import pygame
 import time
-import random
 from datetime import datetime
 
 duration_s = duration_hr*60*60 #convert hours to seconds
@@ -32,15 +28,7 @@ chirp.load(path) #init music stream
 chirp.play(loops=-1) #start infinite loop music stream 
 
 while True:
-    time.sleep(bin_dur)
-    
-    #generate rand int from 0 to 1, if larger than sound_on_ratio, then stop audio, else play audio
-    if random.random() > sound_on_ratio:
-        chirp.pause()
-        #print("pause!")
-    else:
-        chirp.unpause()
-        #print("play")
+    time.sleep(10)
     
     #calc elapsed time and if past duration_hr, end program
     elapsed_t = (datetime.now()-start_t).total_seconds()
