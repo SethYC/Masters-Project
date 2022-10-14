@@ -11,7 +11,8 @@ Created on Fri Sep 27
 
 #init constants/parameters 
 duration_hr = .05 #hours
-path = '/home/seth/Downloads/Western Wood-Pewee (Consolidation).mp3'
+#path = '/home/seth/Downloads/Western Wood-Pewee (Consolidation).mp3'
+path = r'C:\Users\seth.campbell\OneDrive - University of Lethbridge\Documents\Masters\Thesis\Experiment 2\Western Wood Pewee (no voice).mp3'
 
 #import libraries
 import pygame
