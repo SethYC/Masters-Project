@@ -24,3 +24,58 @@ plot(data_full)
 xlabel("day",'FontSize',18)
 ylabel("% success", 'FontSize',18)
 xlim([0,28.5])
+title("individual % success per day")
+
+%%
+%mean chart
+
+figure
+hold on
+
+%same colored rectangle regions as above chart
+rectangle('Position',[3.5,0,6,100],'EdgeColor','#C0C0C0','FaceColor',[1.00,0.91,0.96])
+rectangle('Position',[9.5,0,7,100],'EdgeColor','#C0C0C0','FaceColor','#FFFFE4')
+rectangle('Position',[16.5,0,1,100],'EdgeColor','#C0C0C0','FaceColor',[0.8196, 0.9490, 0.9216])
+rectangle('Position',[17.5,0,1,100],'EdgeColor','#C0C0C0','FaceColor',[0.8196, 0.9490, 0.9216])
+rectangle('Position',[18.5,0,3,100],'EdgeColor','#C0C0C0','FaceColor',[0.8196, 0.9490, 0.9216])
+rectangle('Position',[21.5,0,7,100],'EdgeColor','#C0C0C0','FaceColor',[0.8196, 0.9490, 0.9216])
+
+%compute mean % sucess per day 
+avg_successes = mean(data_full',"omitnan");
+std_successes = std(data_full',"omitnan");
+plot(avg_successes,'-o')
+% errorbar(avg_successes,std_successes,'-o') %with error bars
+xlabel("day",'FontSize',18)
+ylabel("% success", 'FontSize',18)
+xlim([0,28.5])
+title("mean % successes per day",'FontSize',18)
+
+%%
+%mean chart with fitted trend line
+
+figure
+hold on
+
+%same colored rectangle regions as above chart
+rectangle('Position',[3.5,0,6,100],'EdgeColor','#C0C0C0','FaceColor',[1.00,0.91,0.96])
+rectangle('Position',[9.5,0,7,100],'EdgeColor','#C0C0C0','FaceColor','#FFFFE4')
+rectangle('Position',[16.5,0,1,100],'EdgeColor','#C0C0C0','FaceColor',[0.8196, 0.9490, 0.9216])
+rectangle('Position',[17.5,0,1,100],'EdgeColor','#C0C0C0','FaceColor',[0.8196, 0.9490, 0.9216])
+rectangle('Position',[18.5,0,3,100],'EdgeColor','#C0C0C0','FaceColor',[0.8196, 0.9490, 0.9216])
+rectangle('Position',[21.5,0,7,100],'EdgeColor','#C0C0C0','FaceColor',[0.8196, 0.9490, 0.9216])
+
+%compute mean % sucess per day 
+avg_successes = mean(data_full',"omitnan");
+std_successes = std(data_full',"omitnan");
+plot(avg_successes(1:3),'-ob')
+plot(4:9,avg_successes(4:9),'-ob')
+plot(10:16,avg_successes(10:16),'-ob')
+plot(17,avg_successes(17),'-ob')
+plot(18,avg_successes(18),'-ob')
+plot(19:21,avg_successes(19:21),'-ob')
+plot(22:28,avg_successes(22:28),'-ob')
+
+xlabel("day",'FontSize',18)
+ylabel("% success", 'FontSize',18)
+xlim([0,28.5])
+title("mean % successes per day with trend lines",'FontSize',18)
