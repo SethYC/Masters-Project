@@ -1,0 +1,17 @@
+# This CITATION.cff file was generated with cffinit.
+# Visit https://bit.ly/cffinit to generate yours today!
+
+cff-version: 1.2.0
+title: Seth Master's Project Public Scripts
+message: >-
+  If you use this software, please cite it using the
+  metadata from this file.
+type: software
+authors:
+  - {}
+  - given-names: Seth
+    family-names: Campbell
+    email: seth.campbell@uleth.ca
+    affiliation: University of Lethbridge
+repository-code: 'https://github.com/SethYC/Masters-Project'
+license: MIT
