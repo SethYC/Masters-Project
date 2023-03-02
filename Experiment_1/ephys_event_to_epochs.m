@@ -1,13 +1,19 @@
-%Goes through directory table and finds spindles in pre-task and post-task
+%Goes through directory table and finds either spindles or Sharp Wave Rippless in pre-task and post-task
 %epochs and saves the timestamps to epochs.mat
 
-%load table var 't'
+%load table var 't' (with all epochs of all recordings as rows)
 load('Y:\Seth_temp\Thesis recordings\directory_table.mat') %created by create_recording_directories_table()
 
 %remove any file (row) from baseline phase or task epoch
 % t.phase = categorical(t.phase); %convert to categorical for next step
 t(t.phase == 'Baseline',:) = []; %delete rows based on index of rows with baseline
 t(t.epoch == 'task',:) = [];
+
+% fprintf("find and save spindles or SWRs? 1 = spindles, 2 = SWRs: ")
+response = input("find and save spindles or SWRs? 1 = spindles, 2 = SWRs: ","s"); 
+if ~ismember(response,'12')
+    error("Inappropriate input, try again.")
+end
 
 for i = 1:length(t.rat_num) %for each epoch file in all rats & days    
     %load epochs.mat from two folders up
@@ -17,17 +23,21 @@ for i = 1:length(t.rat_num) %for each epoch file in all rats & days
     %find spindles (or later SWR's)
 %     recording_path = t.path{i};
 
-    ts = get_spindles(t.path{i},t.epoch(i),epochs,'ctx1.ncs');
+    if response == 1 %spindles
+        ts = get_spindles(t.path{i},t.epoch(i),epochs,'ctx1.ncs');
 
-    %save timestamps to epochs.mat
-    if t.epoch(i) == 'pre-task_sleep'
-        epochs.tsspin1 = ts;
-    else %post-task_sleep
-        epochs.tsspin2 = ts;
+        %save timestamps to epochs.mat
+        if t.epoch(i) == 'pre-task_sleep'
+            epochs.tsspin1 = ts;
+        else %post-task_sleep
+            epochs.tsspin2 = ts;
+        end
+    else %response == 2 %SWRs
+        continue %placeholder
     end
 
     %save epochs.mat
-    save([epochs_path,'\epochs.mat'],'epochs')
+%     save([epochs_path,'\epochs.mat'],'epochs')
     
     fprintf("progress: %i/%i\n", i , length(t.rat_num))
 end
