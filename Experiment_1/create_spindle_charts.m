@@ -21,6 +21,24 @@ for i = 1:length(epochs_t.rat_num) %for each epochs.mat file
     epochs_path = epochs_t.file_path{i};
     load([epochs_path, '\epochs.mat']) %import struct 'epochs'
 
+%     %optional: remove events during REM sleep
+%     if ~isempty(epochs.tsrem1) 
+%         if ~isempty(epochs.tsspin1)
+%             epochs.tsspin1 = rm_ts_overlap(epochs.tsspin1,epochs.tsrem1);
+%         end
+%         if ~isempty(epochs.tsswr1)
+%             epochs.tsswr1 = rm_ts_overlap(epochs.tsswr1,epochs.tsrem1);
+%         end
+%     end
+%     if ~isempty(epochs.tsrem2) 
+%         if ~isempty(epochs.tsspin2)
+%             epochs.tsspin2 = rm_ts_overlap(epochs.tsspin2,epochs.tsrem2);
+%         end
+%         if ~isempty(epochs.tsswr2)
+%             epochs.tsswr2 = rm_ts_overlap(epochs.tsswr2,epochs.tsrem2);
+%         end
+%     end
+
     %total columns
     epochs_t.R1_spindle_count_total(i) = size(epochs.tsspin1,1);
     epochs_t.R2_spindle_count_total(i) = size(epochs.tsspin2,1);
@@ -38,6 +56,7 @@ end
 
 %save chart 
 save('Y:\Seth_temp\Thesis recordings\epochs_table_with_SWS_dur_spindles.mat','epochs_t')
+% save('Y:\Seth_temp\Thesis recordings\epochs_table_with_SWS_dur_spindles_REM_removed.mat','epochs_t')
 
 %%
 %%create plots
