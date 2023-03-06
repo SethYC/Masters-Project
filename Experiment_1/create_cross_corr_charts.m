@@ -5,6 +5,8 @@
 
 %load table 't' and 'lags' vector from xcorr() (~200mb file!)
 load('Y:\Seth_temp\Thesis recordings\cross_corr_table.mat')
+% load('Y:\Seth_temp\Thesis recordings\cross_corr_table_tones_ver.mat')
+% load('Y:\Seth_temp\Thesis recordings\cross_corr_table_overlap_removed.mat')
 t_temp = t;
 
 %%
@@ -93,11 +95,48 @@ t = t_temp;
 t(t.epoch == 'pre-task_sleep',:) = [];
 t(t.group ~= 'E',:) = []; %leave controls only
 mean_xcorr_data = arrange_chart_data(t.cross_corr_norm);
-make_xcorr_chart(mean_xcorr_data, lags, "test", true)
+make_xcorr_chart(mean_xcorr_data, lags, "test")
 
 %chart formatting
 title("normalized cross correlation of spindle onset relative to SWR onset during post-task rest")
 legend('Control','Experimental')
+
+%%
+% across days charts
+
+%reset table
+t = t_temp;
+
+%filter table data
+t(t.epoch == 'pre-task_sleep',:) = [];
+t(t.rat_num ~= 3 | t.group ~= 'E',:) = [];
+% t(t.day ~= days_array(i),:) = []; %iterate through days to filter by
+chart_data = t.cross_corr_norm; %remaining table data to plot
+
+%chart prep
+figure
+charts = tiledlayout(2,8,'TileSpacing','tight'); %allows for multiple subplots within a single figure window
+axes_array = zeros(1,length(t.rat_num)); %init array to store axes ovbects for each subplot to be made
+
+% days_array = [1:14,1];
+epoch_day_titles = ["Day 1", "Day 2", "Day 3",...
+                    "Day 4", "Day 5", "Day 6",...
+                    "Day 7", "Day 8", "Day 9"...
+                    "Day 10", "Day 11", "Day 12"...
+                    "Day 13", "Day 14", "Probe Trial"];
+
+for i=1:length(t.rat_num) %loop through all days + probe trial for a given rat    
+    axes_array(i) = nexttile; %init new subplot and store axes in an array    
+
+    %processing and plot results
+%     mean_xcorr_data = arrange_chart_data(chart_data(i));
+    smoothed_data = smoothdata(chart_data{i},'movmean',200);
+    make_tiled_xcorr_chart(smoothed_data, lags, sprintf('%s, Spin: %d SWRs: %d', epoch_day_titles(i), t.spin_count(i), t.swr_count(i)))
+end
+
+%full chart formatting
+title(charts,"Spindle Onset Versus SWR Onset Cross Correlations Across Days - Rat 3E")
+linkaxes(axes_array,'y')
 
 %%
 function make_xcorr_chart(mean_xcorr_data, lags, title_text, use_inset)  
@@ -120,6 +159,19 @@ function make_xcorr_chart(mean_xcorr_data, lags, title_text, use_inset)
         set(gca,'XTick',linspace(-40000,40000,11)) %based on 40,000 unit window size, making 1 sec increment ticks
         xticklabels(-5:5)
     end
+end
+
+function make_tiled_xcorr_chart(mean_xcorr_data, lags, title_text)  
+
+    %plot 1sec window with 10sec window plot inset
+%     figure 
+    plot(lags,mean_xcorr_data) %main plot
+    title(title_text)
+%     ylabel("Cross Correlation Strength(?)")
+%     xlabel("Lag (s)")
+    xlim([-4000, 4000])
+    set(gca,'XTick',linspace(-4000,4000,11)) 
+    xticklabels(-0.5:.1:.5)
 end
 
 function mean_xcorr_data = arrange_chart_data(ydata)
