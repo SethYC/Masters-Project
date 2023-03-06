@@ -23,7 +23,10 @@ t(t.epoch == 'task',:) = [];
 %init two new table columns for results 
 cross_corr = cell(length(t.rat_num),1); %non-normalized xcorr results
 cross_corr_norm = cell(length(t.rat_num),1); %normalized xcorr results
-t = addvars(t,cross_corr, cross_corr_norm,'After','path');
+spin_count = zeros(length(t.rat_num),1);
+swr_count = zeros(length(t.rat_num),1);
+t = addvars(t,cross_corr, cross_corr_norm, spin_count, swr_count, 'After','path');
+clear spin_count swr_count
 
 %loop through every pre-task and post-task epoch
 for i = 1:length(t.rat_num) 
@@ -31,18 +34,36 @@ for i = 1:length(t.rat_num)
     load([epochs_path, '\epochs.mat']) %import struct 'epochs'
 
     if t.epoch(i) == 'pre-task_sleep'
+        
+        %%temp```````````````````````````````````
+%         continue
+        
         %load raw eeg file (which is arbitrary as all are the same length)
         eeg_tsd = csc2tsd_badclock([t.path{i}, '\ctx1.ncs'],epochs.sleep1); 
 
         %get pre-task rest epoch start times of spindles and swr's
         spin_ts = epochs.tsspin1(:,1);
         swr_ts = epochs.tsswr1(:,1);
+
+        spin_count = length(epochs.tsspin1(:,1));
+        swr_count = length(epochs.tsswr1(:,1));
     else %post-task_sleep
         eeg_tsd = csc2tsd_badclock([t.path{i}, '\ctx1.ncs'],epochs.sleep2);
 
         spin_ts = epochs.tsspin2(:,1);
         swr_ts = epochs.tsswr2(:,1);
+
+        %%***temp - remove swr overlap with stim, same for spindles
+        peak_ts = find_stim_peaks(epochs, t.path{i});
+        swr_ts = remove_overlap(epochs.tsswr2,peak_ts,500);
+        spin_ts = remove_overlap(epochs.tsspin2,peak_ts,500);
+        %%***temp
+
+        spin_count = length(epochs.tsspin2(:,1));
+        swr_count = length(epochs.tsswr2(:,1));
     end
+
+    
 
     %get eeg timestamps
     eeg_ts = Range(eeg_tsd);
@@ -74,13 +95,15 @@ for i = 1:length(t.rat_num)
     %write to table
     t.cross_corr{i} = r; 
     t.cross_corr_norm{i} = r2;
+    t.spin_count(i) = spin_count;
+    t.swr_count(i) = swr_count;
 
     fprintf("progress: %i/%i\n", i, length(t.rat_num))
 end
 
 %save resulting table and xcorr lags vector
-save('Y:\Seth_temp\Thesis recordings\cross_corr_table.mat','t','lags')
-
+% save('Y:\Seth_temp\Thesis recordings\cross_corr_table.mat','t','lags')
+% save('Y:\Seth_temp\Thesis recordings\cross_corr_table_overlap_removed2.mat','t','lags')
 
 %%
 %find and fill missing SWR or spindle index values in event_idx. Input parameters are
